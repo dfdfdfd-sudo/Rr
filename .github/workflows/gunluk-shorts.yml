@@ -1,0 +1,54 @@
+name: Günlük Shorts Üretimi
+
+on:
+  schedule:
+    - cron: "17 13 * * *"   # Her gün 16:17 (Türkiye saati) — kuyruktaki sıradaki konu
+  workflow_dispatch:         # GitHub'da "Run workflow" düğmesiyle elle de çalışır
+
+permissions:
+  contents: write
+
+jobs:
+  uret:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Araçları kur
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q ffmpeg espeak-ng
+          pip install numpy scipy
+          cd shorts_fabrikasi/motor
+          npm install
+          npm install --no-save playwright@1.49.1
+          npx playwright install --with-deps chromium
+
+      - name: Videoyu üret
+        env:
+          GOOGLE_TTS_API_KEY: ${{ secrets.GOOGLE_TTS_API_KEY }}
+        run: python3 shorts_fabrikasi/uret.py
+
+      - name: Videoyu indirilebilir yap
+        uses: actions/upload-artifact@v4
+        with:
+          name: shorts-${{ github.run_number }}
+          path: shorts_fabrikasi/videolar/
+          retention-days: 30
+
+      - name: Üretildi bilgisini kaydet (video dosyası hariç)
+        run: |
+          git config user.name "shorts-fabrikasi"
+          git config user.email "actions@users.noreply.github.com"
+          git add shorts_fabrikasi/videolar
+          git commit -m "Yeni short üretildi" || echo "Değişiklik yok"
+          git push

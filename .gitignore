@@ -1,2 +1,6 @@
 __pycache__/
 *.mp3
+node_modules/
+shorts_fabrikasi/.is/
+shorts_fabrikasi/videolar/**/*.mp4
+shorts_fabrikasi/videolar/**/onizleme_*.jpg

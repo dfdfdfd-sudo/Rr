@@ -1,0 +1,13 @@
+{
+  "name": "shorts-fabrikasi-motor",
+  "version": "1.0.0",
+  "description": "3D motion graphics render motoru",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "three": "^0.170.0"
+  },
+  "private": true
+}

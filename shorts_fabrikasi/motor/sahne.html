@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<style>
+  @font-face { font-family: 'Fabrika'; src: url('./fontlar/InterDisplay-SemiBold.otf'); font-weight: 600; }
+  @font-face { font-family: 'Fabrika'; src: url('./fontlar/InterDisplay-Bold.otf'); font-weight: 700; }
+  @font-face { font-family: 'Fabrika'; src: url('./fontlar/InterDisplay-ExtraBold.otf'); font-weight: 800; }
+  @font-face { font-family: 'Fabrika'; src: url('./fontlar/InterDisplay-Black.otf'); font-weight: 900; }
+  :root { --vurgu: #ffd84d; --vurgu2: #4dd6ff; --koyu: #0a0f1c; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1080px; height: 1920px; overflow: hidden; background: #05070d; font-family: 'Fabrika', sans-serif; color: #fff; }
+  #gl { position: absolute; inset: 0; }
+  #ui { position: absolute; inset: 0; pointer-events: none; }
+  .k { position: absolute; will-change: transform, opacity; }
+
+  #vinyet { inset: 0; background: radial-gradient(ellipse 75% 60% at 50% 45%, transparent 55%, rgba(0,0,0,.55) 100%),
+            linear-gradient(to bottom, rgba(0,0,0,.55) 0%, transparent 28%, transparent 58%, rgba(0,0,0,.7) 100%); }
+  #gren { inset: 0; opacity: .07; mix-blend-mode: overlay; }
+
+  /* Üst etiket ve ilerleme */
+  #ust { top: 110px; left: 0; width: 100%; text-align: center; }
+  #ust .hap { display: inline-block; padding: 14px 30px; border-radius: 999px; background: rgba(10,15,28,.55);
+              border: 2px solid rgba(255,255,255,.18); font-weight: 800; font-size: 30px; letter-spacing: 3px; backdrop-filter: blur(6px); }
+  #noktalar { top: 182px; left: 0; width: 100%; display: flex; justify-content: center; gap: 12px; }
+  #noktalar i { width: 46px; height: 8px; border-radius: 8px; background: rgba(255,255,255,.22); }
+  #noktalar i.dolu { background: var(--vurgu); box-shadow: 0 0 14px var(--vurgu); }
+
+  /* Sıra numarası, isim, sayaç */
+  #sira { top: 225px; left: 70px; font-weight: 900; font-size: 250px; line-height: 1; letter-spacing: -8px;
+          color: transparent; -webkit-text-stroke: 5px rgba(255,255,255,.95); text-shadow: 0 0 40px rgba(77,214,255,.35); }
+  #sira b { color: var(--vurgu); -webkit-text-stroke: 0; font-size: 120px; vertical-align: top; position: relative; top: 34px; margin-right: 6px; }
+  #ad { top: 490px; left: 70px; right: 70px; font-weight: 900; font-size: 128px; line-height: .95; letter-spacing: -2px;
+        text-shadow: 0 8px 30px rgba(0,0,0,.6); white-space: nowrap; }
+  #ad span { display: inline-block; }
+  #yer { top: 640px; left: 72px; display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 40px; color: rgba(255,255,255,.9);
+         background: rgba(10,15,28,.5); padding: 10px 24px 10px 16px; border-radius: 14px; border-left: 6px solid var(--vurgu); }
+  #yer svg { width: 34px; height: 34px; }
+  #sayac { top: 720px; left: 66px; font-weight: 900; font-size: 150px; letter-spacing: -4px; font-variant-numeric: tabular-nums;
+           background: linear-gradient(180deg, #fff 30%, var(--vurgu2)); -webkit-background-clip: text; background-clip: text; color: transparent;
+           filter: drop-shadow(0 10px 25px rgba(0,0,0,.55)); }
+  #sayac small { font-size: 70px; margin-left: 10px; }
+
+  /* Yükseklik cetveli (sağ üst bölgede, TikTok butonlarının üstünde) */
+  #cetvel { top: 940px; right: 60px; width: 150px; height: 520px; }
+  #cetvel .ray { position: absolute; right: 30px; top: 0; bottom: 0; width: 6px; border-radius: 6px; background: rgba(255,255,255,.15); overflow: hidden; }
+  #cetvel .dolgu { position: absolute; left: 0; right: 0; bottom: 0; background: linear-gradient(to top, var(--vurgu2), var(--vurgu)); }
+  #cetvel .cizgi { position: absolute; right: 44px; font-size: 22px; font-weight: 700; color: rgba(255,255,255,.55); transform: translateY(-50%); }
+  #cetvel .isaret { position: absolute; right: 22px; width: 22px; height: 22px; border-radius: 50%; background: var(--vurgu); box-shadow: 0 0 20px var(--vurgu); transform: translateY(50%); }
+  #cetvel .hayalet { position: absolute; right: 26px; width: 14px; height: 3px; background: rgba(255,255,255,.6); }
+
+  /* Giriş başlığı */
+  #baslik { top: 300px; left: 0; width: 100%; text-align: center; }
+  #baslik .ust { font-weight: 800; font-size: 56px; letter-spacing: 6px; color: rgba(255,255,255,.92); }
+  #baslik .dev { font-weight: 900; font-size: 210px; line-height: .95; letter-spacing: -6px; margin-top: 10px;
+                 background: linear-gradient(180deg, #fff 35%, var(--vurgu) 100%); -webkit-background-clip: text; background-clip: text; color: transparent;
+                 filter: drop-shadow(0 14px 30px rgba(0,0,0,.6)); }
+  #baslik .soru { margin-top: 26px; display: inline-block; font-weight: 800; font-size: 44px; color: var(--koyu); background: var(--vurgu); padding: 10px 26px; border-radius: 12px; }
+
+  /* Kapanış */
+  #cta { top: 340px; left: 0; width: 100%; text-align: center; }
+  #cta .buyuk { font-weight: 900; font-size: 120px; line-height: 1; letter-spacing: -3px; text-shadow: 0 10px 30px rgba(0,0,0,.6); }
+  #cta .kucuk { margin-top: 30px; display: inline-block; font-weight: 800; font-size: 46px; padding: 14px 34px; border-radius: 999px; background: var(--vurgu); color: var(--koyu); }
+  #not { bottom: 250px; left: 0; width: 100%; text-align: center; font-size: 26px; font-weight: 600; color: rgba(255,255,255,.6); }
+
+  /* Zirve etiketi (3D noktaya yapışır) */
+  #zirve { top: 0; left: 0; font-weight: 800; font-size: 34px; padding: 8px 18px; border-radius: 10px; background: rgba(10,15,28,.7); border: 2px solid var(--vurgu); white-space: nowrap; }
+
+  /* Altyazı */
+  #altyazi { top: 1300px; left: 60px; right: 60px; text-align: center; font-weight: 900; font-size: 84px; line-height: 1.12; text-transform: uppercase;
+             -webkit-text-stroke: 3px #000; paint-order: stroke fill; text-shadow: 0 6px 0 #000, 0 10px 30px rgba(0,0,0,.8); }
+  #altyazi span { display: inline-block; margin: 0 10px; transform-origin: 50% 70%; }
+  #altyazi span.aktif { color: var(--vurgu); }
+
+  /* Geçiş perdesi */
+  #perde { inset: -300px; background: linear-gradient(115deg, transparent 30%, var(--vurgu2) 30%, var(--vurgu2) 45%, #fff 45%, #fff 48%, var(--koyu) 48%, var(--koyu) 70%, transparent 70%); }
+  #flas { inset: 0; background: #fff; }
+</style>
+</head>
+<body>
+<canvas id="gl" width="1080" height="1920"></canvas>
+<div id="ui">
+  <div class="k" id="vinyet"></div>
+  <div class="k" id="zirve"></div>
+  <div class="k" id="ust"><span class="hap"></span></div>
+  <div class="k" id="noktalar"></div>
+  <div class="k" id="sira"></div>
+  <div class="k" id="ad"></div>
+  <div class="k" id="yer"><svg viewBox="0 0 24 24" fill="#ffd84d"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg><span></span></div>
+  <div class="k" id="sayac"></div>
+  <div class="k" id="cetvel"><div class="ray"><div class="dolgu"></div></div></div>
+  <div class="k" id="baslik"><div class="ust"></div><div class="dev"></div><div class="soru"></div></div>
+  <div class="k" id="cta"><div class="buyuk"></div><div class="kucuk">YORUMA YAZ · TAKİP ET</div></div>
+  <div class="k" id="not"></div>
+  <div class="k" id="altyazi"></div>
+  <div class="k" id="perde"></div>
+  <div class="k" id="flas"></div>
+  <canvas class="k" id="gren" width="540" height="960"></canvas>
+</div>
+<script type="importmap">{ "imports": { "three": "./node_modules/three/build/three.module.min.js" } }</script>
+<script type="module" src="./sahne.js"></script>
+</body>
+</html>

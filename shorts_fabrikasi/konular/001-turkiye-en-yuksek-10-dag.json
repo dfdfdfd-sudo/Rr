@@ -1,0 +1,107 @@
+{
+  "id": "001-turkiye-en-yuksek-10-dag",
+  "sablon": "geri_sayim",
+  "tema": "dag",
+  "birim": "m",
+  "baslik": "Türkiye'nin En Yüksek 10 Dağı",
+  "ust_baslik": "TÜRKİYE'NİN EN YÜKSEK",
+  "alt_baslik": "10 DAĞI",
+  "not": "Yükseklikler kaynağa göre birkaç metre değişebilir.",
+  "giris": "Türkiye'nin en yüksek 10 dağı! Birincisi 5 bin metreyi aşıyor.",
+  "kapanis": "Sen hangisine tırmanırdın? Yorumlara yaz, takip et!",
+  "ogeler": [
+    {
+      "sira": 10,
+      "ad": "Medetsiz",
+      "yer": "Niğde · Mersin",
+      "deger": 3524,
+      "sekil": "sarp",
+      "metin": "Onuncu: Bolkarların zirvesi Medetsiz. 3.524 metre."
+    },
+    {
+      "sira": 9,
+      "ad": "Tendürek",
+      "yer": "Ağrı · Van",
+      "deger": 3584,
+      "sekil": "kalkan",
+      "metin": "Dokuzuncu: bir yanardağ, Tendürek. 3.584 metre."
+    },
+    {
+      "sira": 8,
+      "ad": "Verçenik",
+      "yer": "Rize",
+      "deger": 3709,
+      "sekil": "sarp",
+      "metin": "Sekizinci: Kaçkarlardan Verçenik. 3.709 metre."
+    },
+    {
+      "sira": 7,
+      "ad": "Demirkazık",
+      "yer": "Niğde",
+      "deger": 3756,
+      "sekil": "sarp",
+      "metin": "Yedinci: Aladağlar'ın sarp zirvesi Demirkazık. 3.756 metre."
+    },
+    {
+      "sira": 6,
+      "ad": "Küçük Ağrı",
+      "yer": "Iğdır",
+      "deger": 3896,
+      "sekil": "volkan",
+      "metin": "Altıncı: Ağrı'nın kardeşi Küçük Ağrı. 3.896 metre."
+    },
+    {
+      "sira": 5,
+      "ad": "Erciyes",
+      "yer": "Kayseri",
+      "deger": 3917,
+      "sekil": "volkan",
+      "metin": "Beşinci: eski bir yanardağ, Erciyes. 3.917 metre."
+    },
+    {
+      "sira": 4,
+      "ad": "Kaçkar",
+      "yer": "Rize",
+      "deger": 3937,
+      "sekil": "sarp",
+      "metin": "Dördüncü: buzul gölleriyle Kaçkar. 3.937 metre."
+    },
+    {
+      "sira": 3,
+      "ad": "Süphan",
+      "yer": "Bitlis",
+      "deger": 4058,
+      "sekil": "volkan",
+      "metin": "Üçüncü: Van Gölü'ne bakan Süphan. 4.058 metre."
+    },
+    {
+      "sira": 2,
+      "ad": "Cilo",
+      "yer": "Hakkari",
+      "deger": 4135,
+      "sekil": "sarp",
+      "metin": "İkinci: dev buzullarıyla Cilo. 4.135 metre."
+    },
+    {
+      "sira": 1,
+      "ad": "Ağrı Dağı",
+      "yer": "Ağrı · Iğdır",
+      "deger": 5137,
+      "sekil": "volkan",
+      "metin": "Ve birinci... Türkiye'nin çatısı, Ağrı Dağı! Tam 5.137 metre."
+    }
+  ],
+  "kaynaklar": [
+    "https://en.wikipedia.org/wiki/Mount_Cilo",
+    "https://dagkamp.blogspot.com/2017/11/turkiyenin-en-yuksek-daglar-listesi.html",
+    "https://www.sabah.com.tr/egitim/turkiyenin-en-yuksek-dagi-hangisi-turkiyedeki-en-yuksek-daglar-siralamasi-e1-6871744"
+  ],
+  "etiketler": [
+    "türkiye",
+    "dağlar",
+    "ağrıdağı",
+    "coğrafya",
+    "bilgi",
+    "keşfet"
+  ]
+}

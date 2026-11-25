@@ -1,0 +1,6 @@
+{
+  "tts": "auto",
+  "ses_adi": "tr-TR-Wavenet-E",
+  "hiz": 1.1,
+  "_aciklama": "tts: auto = önce Google, olmazsa espeak test sesi | google = sadece Google (yoksa dur) | espeak = sadece test sesi. Diğer sesler: tr-TR-Wavenet-B (erkek), tr-TR-Wavenet-A / C / D (kadın), tr-TR-Chirp3-HD-Charon (en doğal)."
+}
