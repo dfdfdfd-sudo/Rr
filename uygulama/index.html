@@ -544,7 +544,9 @@ ${SCHEMA}`;
     return "";
   }
   function progress(name, input) {
-    const t = firstText(input);
+    const q = Array.isArray(input?.search_queries) ? input.search_queries.join(", ") : "";
+    const u = Array.isArray(input?.urls) ? input.urls.join(" ") : "";
+    const t = (name === "web_fetch" ? u : q) || (typeof input?.objective === "string" ? input.objective : "") || firstText(input);
     if (name === "web_fetch") {
       const m = t.match(/https:\/\/[^\s,]+/i);
       let host = ""; try { host = m ? new URL(m[0]).hostname.replace(/^www\./, "") : ""; } catch {}
@@ -571,6 +573,15 @@ ${SCHEMA}`;
       if (!info) continue;
       let d = null; try { d = await mcp.describeTool(SEARCH, name); } catch {}
       let schema = d?.inputSchema && typeof d.inputSchema === "object" ? d.inputSchema : null;
+      if (schema && JSON.stringify(schema).length > 3800) {
+        // Shrink: keep names, types and required; shorten long descriptions.
+        const props = {};
+        for (const [k, v] of Object.entries(schema.properties || {})) {
+          const c = { ...v }; if (typeof c.description === "string") c.description = c.description.slice(0, 120);
+          delete c.title; props[k] = c;
+        }
+        schema = { type: "object", properties: props, ...(schema.required ? { required: schema.required } : {}) };
+      }
       if (schema && (schema.type !== "object" || JSON.stringify(schema).length > 4000)) schema = null;
       const desc = (d?.description || info.description || (name === "web_search" ? "Searches the web and returns results with URLs." : "Fetches the text of a web page by URL.")).slice(0, 1000);
       tools.push({
