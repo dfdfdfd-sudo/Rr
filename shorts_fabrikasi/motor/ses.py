@@ -63,7 +63,8 @@ def edge_tts(metin, dosya, ses_adi, hiz):
     import edge_tts as et
     yuzde = f"{round((hiz - 1) * 100):+d}%"
     mp3 = Path(dosya).with_suffix(".mp3")
-    asyncio.run(et.Communicate(konusma_metni(metin), ses_adi, rate=yuzde).save(str(mp3)))
+    vekil = os.environ.get("HTTPS_PROXY") or os.environ.get("https_proxy")  # şirket/bulut ağları için
+    asyncio.run(et.Communicate(konusma_metni(metin), ses_adi, rate=yuzde, proxy=vekil).save(str(mp3)))
     subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(mp3), "-ar", str(SR), "-ac", "1", str(dosya)], check=True)
     mp3.unlink(missing_ok=True)
 

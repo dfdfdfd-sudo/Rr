@@ -2,6 +2,6 @@
   "tts": "auto",
   "edge_ses": "tr-TR-AhmetNeural",
   "google_ses": "tr-TR-Wavenet-E",
-  "hiz": 1.1,
+  "hiz": 1.22,
   "_aciklama": "tts: auto = Google anahtarı varsa Google, yoksa Edge (ücretsiz, anahtarsız), o da olmazsa espeak test sesi | edge | google | espeak. Edge sesleri: tr-TR-AhmetNeural (erkek), tr-TR-EmelNeural (kadın). Google sesleri: tr-TR-Wavenet-B/E (erkek), A/C/D (kadın), tr-TR-Chirp3-HD-Charon."
 }
