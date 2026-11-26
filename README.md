@@ -46,3 +46,23 @@ Renkler, yazı tipi ve düzen `sablon/kart.html` dosyasındadır. Şarap türün
 - **Kartı indir** ile A6 yazdırılabilir dosya alın.
 
 Uygulama şarabı **Parallel Search** bağlayıcısıyla internette araştırır ve kaynakları kartın altına ekler. Kart hazırlayan kişinin claude.ai → Ayarlar → Bağlayıcılar bölümünden ücretsiz "Parallel Search"ü eklemesi gerekir (kartları okuyanların gerekmez).
+
+## 🗄️ Faz 1: Türkiye şarap veritabanı
+
+Tüketici uygulamasının temeli. Klasör: `veritabani/`
+
+| Dosya | Ne işe yarar |
+|---|---|
+| `saraplar.json` | Araştırılmış şaraplar. Her şarabın kaynakları ve doğrulanamayan alanları kayıtlı |
+| `sema.sql` | Supabase/PostgreSQL tabloları: şaraplar, üreticiler, üzümler, puanlar, yorumlar, "şaraplarım", engelleme, şikâyet, etiket taramaları + erişim kuralları |
+| `seed.sql` | `saraplar.json`'dan üretilir, elle düzenlenmez |
+
+Veriyi doğrulayıp SQL üretmek için (yapay zekâ kullanmaz):
+```bash
+node araclar/veritabani-hazirla.js
+```
+Supabase'de önce `sema.sql`, sonra `seed.sql` çalıştırılır.
+
+**Tat profili (1–5):** gövde, tanen, asit, tatlılık. "Zevk profili" ve "benzer şaraplar" önerileri bu sayılarla hesaplanacak. Şu anki değerler kaynaklardaki tadım notlarından çıkarılmış tahminlerdir.
+
+**Etiket eşleştirme:** Telefon etiketteki yazıyı okur, veritabanı en benzer şarabı bulur (`pg_trgm`). Test: "KAVAKLIDERE CANKAYA 2024" → Çankaya (benzerlik 0,80).
