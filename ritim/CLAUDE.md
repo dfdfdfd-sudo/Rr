@@ -50,7 +50,7 @@ Laboratuvar (sonra): ilaç, döngü, hasta gün (sağlık verisi → KVKK açık
 ### Su
 - İçecek kategorileri: Gazsız / Gazlı / Sıcak; her içeceğin kabı farklı (şişe, ince belli çay bardağı, fincan, kupa, kutu, bardak).
 - Şişe boyu: 0,5 / 1 / 1,5 L, matara, 5 L, damacana (19 L) + damacana bitiş tahmini.
-- **Su değeri:** su/maden %100, çay/ayran/şalgam %90, kahve/kola/meyve suyu %80, enerji içeceği %60 (yaklaşık oranlar).
+- **Su değeri (güncellendi, bkz. docs/plan-su.md):** içeceğin kendi su oranı — su/maden/çay/kahve ~%100, kola/meyve suyu/ayran/şalgam/enerji ~%90 (Maughan ve ark. 2016).
 - Kafein (yetişkin üst sınır ~400 mg/gün) ve şeker (DSÖ ideal <25 g/gün) uyarısı.
 - Bugünün karışım çubuğu, gruplu liste (Çay 6× · −/+), tempo çizgisi, sık içilenlerden tek dokunuşla ekleme.
 - Hatırlatıcı: saat aralığı + sıklık → **expo-notifications ile yerel bildirim**.
