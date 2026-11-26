@@ -1,14 +1,15 @@
 import { Link, Stack } from 'expo-router';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
-import { renk, yazi } from '@/theme';
+import { Y } from '@/components/Y';
+import { renk } from '@/theme';
 
 export default function Bulunamadi() {
   return (
     <>
       <Stack.Screen options={{ title: 'Bulunamadı' }} />
       <View style={s.kok}>
-        <Text style={s.baslik}>Bu sayfa yok.</Text>
+        <Y k={800} b={21}>Bu sayfa yok.</Y>
         <Link href="/" style={s.link}>Bugün'e dön</Link>
       </View>
     </>
@@ -17,6 +18,5 @@ export default function Bulunamadi() {
 
 const s = StyleSheet.create({
   kok: { flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: renk.zemin, padding: 20 },
-  baslik: { ...yazi.altBaslik, color: renk.yazi },
   link: { marginTop: 16, color: renk.su, fontWeight: '700' },
 });

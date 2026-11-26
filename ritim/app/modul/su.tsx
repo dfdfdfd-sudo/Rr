@@ -1,18 +1,11 @@
-import { router } from 'expo-router';
-import { Pressable, Text } from 'react-native';
-
 import { Ekran } from '@/components/Ekran';
-import { Kart } from '@/components/Kart';
-import { renk } from '@/theme';
+import { Yakinda } from '@/components/Yakinda';
 
-// Su modülü sıradaki adımda burada kurulacak (dolan şişe, içecekler, hatırlatıcı, şişe çevirme).
+// Su modülü docs/plan-su.md'deki adımlarla burada kurulacak.
 export default function Su() {
   return (
-    <Ekran ust="Modül" baslik="Su">
-      <Kart baslik="Hazırlanıyor" alt="Prototipteki su modülü buraya taşınacak" vurgu={renk.su} />
-      <Pressable onPress={() => router.back()} accessibilityRole="button" style={{ padding: 12 }}>
-        <Text style={{ color: renk.soluk, fontWeight: '700' }}>← Geri</Text>
-      </Pressable>
+    <Ekran baslik="Su" geri>
+      <Yakinda ikon="su" metin="Dolan şişe, içecekler, hatırlatıcı ve şişe çevirme oyunu planlandı (docs/plan-su.md). İlk adımı bekliyor." />
     </Ekran>
   );
 }
