@@ -1,6 +1,7 @@
 {
   "tts": "auto",
-  "ses_adi": "tr-TR-Wavenet-E",
+  "edge_ses": "tr-TR-AhmetNeural",
+  "google_ses": "tr-TR-Wavenet-E",
   "hiz": 1.1,
-  "_aciklama": "tts: auto = önce Google, olmazsa espeak test sesi | google = sadece Google (yoksa dur) | espeak = sadece test sesi. Diğer sesler: tr-TR-Wavenet-B (erkek), tr-TR-Wavenet-A / C / D (kadın), tr-TR-Chirp3-HD-Charon (en doğal)."
+  "_aciklama": "tts: auto = Google anahtarı varsa Google, yoksa Edge (ücretsiz, anahtarsız), o da olmazsa espeak test sesi | edge | google | espeak. Edge sesleri: tr-TR-AhmetNeural (erkek), tr-TR-EmelNeural (kadın). Google sesleri: tr-TR-Wavenet-B/E (erkek), A/C/D (kadın), tr-TR-Chirp3-HD-Charon."
 }

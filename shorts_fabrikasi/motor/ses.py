@@ -57,6 +57,26 @@ def espeak_tts(metin, dosya):
                     konusma_metni(metin)], check=True)
 
 
+def edge_tts(metin, dosya, ses_adi, hiz):
+    """Microsoft Edge neural sesi: ücretsiz, anahtar istemez. MP3 üretir, WAV'a çevrilir."""
+    import asyncio
+    import edge_tts as et
+    yuzde = f"{round((hiz - 1) * 100):+d}%"
+    mp3 = Path(dosya).with_suffix(".mp3")
+    asyncio.run(et.Communicate(konusma_metni(metin), ses_adi, rate=yuzde).save(str(mp3)))
+    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(mp3), "-ar", str(SR), "-ac", "1", str(dosya)], check=True)
+    mp3.unlink(missing_ok=True)
+
+
+def tek_ses(motor, metin, dosya, ayar):
+    if motor == "google":
+        google_tts(metin, dosya, ayar.get("google_ses", "tr-TR-Wavenet-E"), ayar["hiz"])
+    elif motor == "edge":
+        edge_tts(metin, dosya, ayar.get("edge_ses", "tr-TR-AhmetNeural"), ayar["hiz"])
+    else:
+        espeak_tts(metin, dosya)
+
+
 def wav_oku(dosya):
     sr, x = wavfile.read(dosya)
     if x.dtype.kind in "iu":
@@ -81,20 +101,23 @@ def seslendir(sahneler, klasor, ayar):
     sesler = []
     for i, s in enumerate(sahneler):
         dosya = klasor / f"{i:02}.wav"
-        if ayar.get("tts") != "espeak":
-            try:
-                google_tts(s["metin"], dosya, ayar["ses_adi"], ayar["hiz"])
-                kaynak = "google"
-            except Exception as e:
-                if ayar.get("tts") == "google":
-                    raise
-                if kaynak is None:
-                    print(f"  ! Google TTS kullanılamadı ({e}). Test için espeak-ng sesi kullanılıyor.")
-                kaynak = "espeak"
-                espeak_tts(s["metin"], dosya)
+        # Sıra: istenen motor -> (auto ise) Google anahtarı varsa Google, sonra Edge, en son espeak
+        if kaynak is None:
+            secim = ayar.get("tts", "auto")
+            adaylar = {"auto": (["google"] if os.environ.get("GOOGLE_TTS_API_KEY") else []) + ["edge", "espeak"]}.get(secim, [secim])
+            for motor in adaylar:
+                try:
+                    tek_ses(motor, s["metin"], dosya, ayar)
+                    kaynak = motor
+                    break
+                except Exception as e:
+                    print(f"  ! {motor} sesi kullanılamadı: {str(e)[:120]}")
+                    if len(adaylar) == 1:
+                        raise
+            if kaynak != adaylar[0]:
+                print(f"  ! Ses motoru: {kaynak}")
         else:
-            kaynak = "espeak"
-            espeak_tts(s["metin"], dosya)
+            tek_ses(kaynak, s["metin"], dosya, ayar)
         sesler.append(wav_oku(dosya))
     return sesler, kaynak
 

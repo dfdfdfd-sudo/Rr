@@ -27,7 +27,7 @@ jobs:
         run: |
           sudo apt-get update -q
           sudo apt-get install -y -q ffmpeg espeak-ng
-          pip install numpy scipy
+          pip install numpy scipy edge-tts
           cd shorts_fabrikasi/motor
           npm install
           npm install --no-save playwright@1.49.1

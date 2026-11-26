@@ -15,7 +15,7 @@ Bir videoyu bir **çizgi film stüdyosu** gibi düşün. Stüdyoda 4 kişi çal�
 | Stüdyo çalışanı | Ne yapar? | Dosya |
 |---|---|---|
 | ✍️ **Senarist** | Ne anlatılacağını yazar: başlık, dağlar, cümleler | `konular/001-....json` |
-| 🎙️ **Ses ustası** | Metni Google'ın sesiyle okutur. Müziği, rüzgârı ve "vuuş" geçiş seslerini matematikle üretir | `motor/ses.py` |
+| 🎙️ **Ses ustası** | Metni yapay zekâ sesiyle (Edge veya Google) okutur. Müziği, rüzgârı ve "vuuş" geçiş seslerini matematikle üretir | `motor/ses.py` |
 | 🎨 **Animatör** | Dağları 3D olarak sıfırdan çizer, kamerayı uçurur, yazıları hareket ettirir | `motor/sahne.js` + `sahne.html` |
 | 🎞️ **Kurgucu** | Her kareyi fotoğraflar, sesle birleştirip MP4 yapar | `motor/render.js` |
 
@@ -62,30 +62,32 @@ standardı olan **-14 LUFS** seviyesine getirilir.
 2. **ffmpeg** kur (Windows: `winget install ffmpeg`, Mac: `brew install ffmpeg`).
 3. Komut satırında:
    ```bash
-   pip install numpy scipy
+   pip install numpy scipy edge-tts
    cd shorts_fabrikasi/motor
    npm install
    npm install playwright
    npx playwright install chromium
    ```
 
-## 3. Google seslendirme anahtarı
+## 3. Seslendirme (anahtar gerekmez!)
 
-1. https://console.cloud.google.com → yeni proje oluştur.
-2. "APIs & Services" → **Cloud Text-to-Speech API** → *Enable*.
-3. "Credentials" → *Create credentials* → **API key**. Güvenlik için anahtarı sadece
-   Text-to-Speech API ile sınırla.
-4. Anahtarı **asla** sohbete, koda veya GitHub'a yazma. Şu yerlere koy:
-   - **Kendi bilgisayarında:** ortam değişkeni olarak.
-     Windows: `setx GOOGLE_TTS_API_KEY "anahtar"` · Mac/Linux: `export GOOGLE_TTS_API_KEY=anahtar`
-   - **GitHub otomasyonu için:** depo → *Settings* → *Secrets and variables* → *Actions* →
-     *New repository secret* → adı `GOOGLE_TTS_API_KEY`.
-   - **Claude bulut oturumunda:** ortamın ayarlarındaki *network secrets* bölümüne,
-     `texttospeech.googleapis.com` için, başlık adı `X-Goog-Api-Key`.
+Sistem sesi şu sırayla seçer (`ayarlar.json` → `"tts": "auto"`):
 
-Anahtar yoksa sistem durmaz. Robotik bir test sesiyle (espeak) devam eder, böylece
-görüntüyü ve zamanlamayı yine kontrol edebilirsin. Ses seçimi `ayarlar.json` içinde.
-En doğal ses için `tr-TR-Chirp3-HD-Charon` dene.
+| Sıra | Ses motoru | Anahtar? | Kalite |
+|---|---|---|---|
+| 1 | **Google Cloud TTS** | Gerekir (`GOOGLE_TTS_API_KEY`) | Çok iyi |
+| 2 | **Microsoft Edge neural** | **Gerekmez, ücretsiz** | Çok iyi |
+| 3 | espeak-ng | Gerekmez | Robotik, sadece test için |
+
+Yani hiçbir şey yapmasan bile Edge sesi kullanılır: `tr-TR-AhmetNeural` (erkek) veya
+`tr-TR-EmelNeural` (kadın). Sesi `ayarlar.json` içinde `edge_ses` satırından değiştirirsin.
+
+Not: Edge sesi Microsoft'un resmi olmayan ücretsiz servisidir. Bir gün değişirse
+sistem otomatik olarak bir sonraki motora geçer. Google anahtarını sonradan eklemek
+istersen:
+1. https://console.cloud.google.com → **Cloud Text-to-Speech API** → *Enable* → *Credentials* → **API key**.
+2. Anahtarı asla koda veya sohbete yazma. GitHub'da *Settings → Secrets → Actions* altına
+   `GOOGLE_TTS_API_KEY` adıyla ekle. Kendi bilgisayarında bunu ortam değişkeni olarak tanımla.
 
 ## 4. Kullanım
 

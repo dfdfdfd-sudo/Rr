@@ -52,8 +52,8 @@ def uret(dosya, ayar, onizleme=False):
     print("  1/3 Seslendirme ve ses tasarımı...")
     cizelge = ses.uret(konu, is_klasoru, ayar)
     print(f"      süre {cizelge['sure']:.1f} sn, ses kaynağı: {cizelge['ses_kaynagi']}")
-    if cizelge["ses_kaynagi"] != "google":
-        print("      ⚠ Google TTS anahtarı yok: test sesi (espeak) kullanıldı. README'deki 'Google anahtarı' bölümüne bak.")
+    if cizelge["ses_kaynagi"] == "espeak":
+        print("      ⚠ Doğal ses (Edge/Google) kullanılamadı, robotik test sesi (espeak) kullanıldı. İnternet bağlantısını kontrol et.")
 
     print("  2/3 3D render...")
     komut = ["node", str(KOK / "motor" / "render.js"), str(is_klasoru)]
