@@ -45,4 +45,4 @@ Renkler, yazı tipi ve düzen `sablon/kart.html` dosyasındadır. Şarap türün
 - Kartı ekranda düzeltip **ortak kütüphaneye** kaydedin; paylaşılan herkes görür.
 - **Kartı indir** ile A6 yazdırılabilir dosya alın.
 
-Fark: Uygulama internette arama yapmaz, Claude'un kendi bilgisini kullanır. Doğrulanmış, kaynaklı araştırma için `/sarap-karti` becerisini kullanın.
+Uygulama şarabı **Parallel Search** bağlayıcısıyla internette araştırır ve kaynakları kartın altına ekler. Kart hazırlayan kişinin claude.ai → Ayarlar → Bağlayıcılar bölümünden ücretsiz "Parallel Search"ü eklemesi gerekir (kartları okuyanların gerekmez).
