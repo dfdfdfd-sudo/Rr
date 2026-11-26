@@ -38,3 +38,11 @@ Renkler, yazı tipi ve düzen `sablon/kart.html` dosyasındadır. Şarap türün
 ## Önemli
 - Agent bulamadığı bilgiyi **uydurmaz**, "Doğrulanmadı" yazar. Servis öncesi etiketle kontrol edin.
 - Kartlar **iç kullanım** içindir (personel eğitimi). Alkollü içki tanıtım ve reklam kısıtlamaları nedeniyle müşteriye yönelik reklam materyali olarak kullanmayın.
+
+## 📱 Uygulama sürümü
+`uygulama/index.html` claude.ai'de yayınlanan web uygulamasıdır (telefonda da çalışır):
+- Şarap adı yazın veya etiket fotoğrafı ekleyin → Claude kartı hazırlar.
+- Kartı ekranda düzeltip **ortak kütüphaneye** kaydedin; paylaşılan herkes görür.
+- **Kartı indir** ile A6 yazdırılabilir dosya alın.
+
+Fark: Uygulama internette arama yapmaz, Claude'un kendi bilgisini kullanır. Doğrulanmış, kaynaklı araştırma için `/sarap-karti` becerisini kullanın.
