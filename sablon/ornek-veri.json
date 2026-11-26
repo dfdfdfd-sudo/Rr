@@ -1,0 +1,25 @@
+{
+  "ad": "Şarabın adı",
+  "uretici": "Üretici / şaraphane",
+  "yil": "2021",
+  "tur": "kirmizi",
+  "bolge": "Bölge, Ülke",
+  "uzumler": "Üzüm(ler)",
+  "alkol": "%13,5",
+  "govde": "Orta gövdeli",
+  "tadim": {
+    "goz": "Renk ve görünüş",
+    "burun": "Koku / aroma",
+    "damak": "Ağızdaki tat, tanen, asit, bitiş"
+  },
+  "servis": {
+    "sicaklik": "16–18 °C",
+    "kadeh": "Bordo tipi kadeh",
+    "dekant": "Gerekmez / 30 dk önerilir"
+  },
+  "eslesme": ["Yemek 1", "Yemek 2", "Yemek 3"],
+  "garson_cumlesi": "Müşteriye söylenecek en fazla 2 sade cümle.",
+  "bilmeniz_gereken": ["Kısa bilgi 1", "Kısa bilgi 2"],
+  "uyari": "Sülfit içerir.",
+  "kaynaklar": ["https://..."]
+}

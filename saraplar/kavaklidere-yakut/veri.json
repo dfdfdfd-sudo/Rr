@@ -1,0 +1,36 @@
+{
+  "ad": "Yakut",
+  "uretici": "Kavaklıdere",
+  "yil": "",
+  "tur": "kirmizi",
+  "bolge": "Elazığ & Diyarbakır, Türkiye",
+  "uzumler": "Öküzgözü, Boğazkere",
+  "alkol": "Doğrulanmadı – etikete bakın",
+  "govde": "Orta gövdeli, kuru",
+  "tadim": {
+    "goz": "Koyu yakut kırmızısı, mor yansımalar",
+    "burun": "Vişne, erik, kırmızı meyve, hafif baharat",
+    "damak": "Yumuşak tanen, sulu meyve, hafif karabiber bitiş"
+  },
+  "servis": {
+    "sicaklik": "16–18 °C (genel öneri)",
+    "kadeh": "Bordo tipi kırmızı kadeh",
+    "dekant": "Gerekmez"
+  },
+  "eslesme": ["Izgara köfte ve kebaplar", "Kuzu şiş / pirzola", "Etli pide, lahmacun", "Kaşar ve eski kaşar tabağı"],
+  "garson_cumlesi": "Türkiye'nin yerli Öküzgözü ve Boğazkere üzümlerinden yapılan, vişne ve erik aromalı, yumuşak içimli bir kırmızı. Izgara etlerle çok iyi gider.",
+  "bilmeniz_gereken": [
+    "Öküzgözü meyve ve yumuşaklık, Boğazkere tanen ve yapı verir.",
+    "Kavaklıdere 1929'da Ankara'da kurulan, Türkiye'nin en köklü şaraphanelerinden.",
+    "Yakut, Türkiye'nin uzun yıllar en çok bilinen kırmızılarından."
+  ],
+  "uyari": "Sülfit içerir.",
+  "kaynaklar": [
+    "https://www.jancisrobinson.com/tastings/137231",
+    "https://www.internationalwinechallenge.com/canopy/beverage_details?wid=114599",
+    "https://www.internationalwinechallenge.com/canopy/beverage_details?wid=94802",
+    "https://glossary.wein-plus.eu/yakut",
+    "https://www.mdwiki.org/wiki/Kavakl%C4%B1dere_(wine)",
+    "https://wineparis.com/newfront/product/84776"
+  ]
+}
