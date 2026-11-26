@@ -13,6 +13,7 @@ export const renk = {
   vurgu: '#f4f4f3', // ana düğme zemini (açık)
   vurguYazi: '#08090a', // ana düğme yazısı (koyu)
   menu: 'rgba(28,29,33,0.94)', // yüzen alt menü
+  figur: '#d9dce2', // hareket figürü
 
   // Durum renkleri (skor, uyarı)
   iyi: '#2ee59d',

@@ -49,6 +49,14 @@ export default function RootLayout() {
         <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: renk.zemin } }}>
           <Stack.Screen name="(tabs)" />
           <Stack.Screen
+            name="plan-gun"
+            options={{ presentation: 'formSheet', sheetAllowedDetents: [0.75, 1], sheetGrabberVisible: true, contentStyle: { backgroundColor: renk.kart } }}
+          />
+          <Stack.Screen
+            name="aliskanlik-ekle"
+            options={{ presentation: 'formSheet', sheetAllowedDetents: [0.75, 1], sheetGrabberVisible: true, contentStyle: { backgroundColor: renk.kart } }}
+          />
+          <Stack.Screen
             name="hizli"
             options={{ presentation: 'formSheet', sheetAllowedDetents: [0.5], sheetGrabberVisible: true, contentStyle: { backgroundColor: renk.kart } }}
           />

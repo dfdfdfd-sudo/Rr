@@ -1,6 +1,6 @@
 import { router } from 'expo-router';
-import { ReactNode } from 'react';
-import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { ReactNode, RefObject } from 'react';
+import { Pressable, ScrollView, ScrollViewInstance, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Ikon } from '@/components/Ikon';
@@ -15,13 +15,15 @@ type Props = {
   /** Başlığın sağındaki küçük öğeler (rozet vb.) */
   sag?: ReactNode;
   children?: ReactNode;
+  /** Ekranı koddan kaydırmak için (ör. kas haritasından kütüphaneye) */
+  kaydirRef?: RefObject<ScrollViewInstance | null>;
 };
 
 /** Her ekranın ortak iskeleti. Alt menünün altında kalmasın diye altta boşluk bırakır. */
-export function Ekran({ baslik, geri, sag, children }: Props) {
+export function Ekran({ baslik, geri, sag, children, kaydirRef }: Props) {
   return (
     <SafeAreaView style={s.kok} edges={['top']}>
-      <ScrollView contentContainerStyle={s.ic} showsVerticalScrollIndicator={false}>
+      <ScrollView ref={kaydirRef} contentContainerStyle={s.ic} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
         {baslik ? (
           <View style={s.ust}>
             {geri ? (

@@ -8,7 +8,8 @@ import { Bolum, Ekran } from '@/components/Ekran';
 import { Ikon } from '@/components/Ikon';
 import { RitimHalkasi } from '@/components/RitimHalkasi';
 import { Y } from '@/components/Y';
-import { ALISKANLIKLAR, ARACLAR, IPUCLARI, SABAH, SU_HEDEF_ML } from '@/data/varsayilan';
+import { ARACLAR, IPUCLARI, SABAH } from '@/data/varsayilan';
+import { Figur } from '@/components/Figur';
 import { skorRengi, skorYazisi } from '@/lib/skor';
 import { bugun, GUN_KISA, haftaGunleri, sayi, selam, son7, tarihten, uzunTarih } from '@/lib/tarih';
 import { useGunluk } from '@/store/gunluk';
@@ -21,7 +22,8 @@ export default function Bugun() {
   const k = bugun();
   const gun = g.gun(k);
   const skor = g.skor(k);
-  const tamam = ALISKANLIKLAR.filter((a) => gun.aliskanlik[a.id]).length;
+  const tamam = g.aliskanliklar.filter((a) => gun.aliskanlik[a.id]).length;
+  const prog = g.gununProgrami(k);
   const [pop, setPop] = useState<string | null>(null);
 
   const modul = (id: string) => router.push(id === 'su' ? '/modul/su' : { pathname: '/modul/[ad]', params: { ad: id } });
@@ -55,21 +57,33 @@ export default function Bugun() {
             {skorYazisi(skor)}
           </Y>
           <Y k={600} b={13} r={renk.soluk}>
-            {tamam}/{ALISKANLIKLAR.length} alışkanlık
+            {tamam}/{g.aliskanliklar.length} alışkanlık
+            {g.istatistik.enIyiSeri ? ` · ${g.istatistik.enIyiSeri} gün en iyi seri` : ''}
           </Y>
         </View>
         <View style={s.mets}>
-          <Metrik ad="Uyku" deger={gun.uykuDk ? `${Math.floor(gun.uykuDk / 60)}s ${gun.uykuDk % 60}d` : '—'} alt="kaydet" onPress={() => modul('uyku')} ilk />
-          <Metrik genis ad="Antrenman" deger="Dinlenme" alt="toparlanma günü" onPress={() => router.navigate('/antrenman')} />
+          {g.modulAcik('uyku') ? (
+            <Metrik ad="Uyku" deger={gun.uykuDk ? `${Math.floor(gun.uykuDk / 60)}s ${gun.uykuDk % 60}d` : '—'} alt="kaydet" onPress={() => modul('uyku')} ilk />
+          ) : null}
+          <Metrik
+            genis
+            ilk={!g.modulAcik('uyku')}
+            ad="Antrenman"
+            deger={prog ? 'Bekliyor' : 'Dinlenme'}
+            alt={prog ? prog.n.replace('Salon · ', '') : 'toparlanma günü'}
+            onPress={() => router.navigate('/antrenman')}
+          />
+          {g.modulAcik('su') ? (
           <Metrik
             ad="Su"
             deger={`${sayi(gun.suMl / 1000)} L`}
-            alt={`/ ${sayi(SU_HEDEF_ML / 1000)} L · dokun +su`}
+            alt={`/ ${sayi(g.hedefler.su / 1000)} L · dokun +su`}
             onPress={() => {
               Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
               g.suEkle(k, 250);
             }}
           />
+          ) : null}
         </View>
       </View>
 
@@ -91,31 +105,53 @@ export default function Bugun() {
         })}
       </View>
 
-      {/* Bugünün antrenmanı (Antrenman modülü gelene kadar: dinlenme günü) */}
-      <View style={[s.satir2, { marginTop: 14 }]}>
-        <View style={s.kucukResim}>
-          <Ikon ad="ay" boyut={30} renk={renk.soluk} />
-        </View>
-        <View style={{ flex: 1 }}>
-          <Y k={700} b={12} r={renk.soluk}>
-            Bugün
-          </Y>
-          <Y k={800} b={17} style={{ letterSpacing: -0.2 }}>
-            Dinlenme günü
-          </Y>
-          <Y k={500} b={13} r={renk.soluk}>
-            Hafif yürüyüş ya da nefes egzersizi iyi gelir
-          </Y>
-        </View>
-        <Pressable accessibilityLabel="Antrenman seç" onPress={() => router.navigate('/antrenman')} style={s.oynat}>
-          <Ikon ad="ileri" renk={renk.yazi} />
+      {/* Bugünün antrenmanı */}
+      {prog ? (
+        <Pressable accessibilityRole="button" onPress={() => router.push({ pathname: '/program/[id]', params: { id: prog.id } })} style={[s.satir2, { marginTop: 14 }]}>
+          <View style={s.kucukResim}>
+            <Figur id={prog.it[0][0]} boyut={64} oynasin={false} />
+          </View>
+          <View style={{ flex: 1 }}>
+            <Y k={700} b={12} r={renk.soluk}>
+              Bugünün antrenmanı
+            </Y>
+            <Y k={800} b={17} style={{ letterSpacing: -0.2 }}>
+              {prog.n}
+            </Y>
+            <Y k={500} b={13} r={renk.soluk}>
+              {prog.min} dk · {prog.it.length} hareket · {prog.w}
+            </Y>
+          </View>
+          <View style={[s.oynat, { backgroundColor: renk.vurgu }]}>
+            <Ikon ad="oynat" renk={renk.vurguYazi} />
+          </View>
         </Pressable>
-      </View>
+      ) : (
+        <View style={[s.satir2, { marginTop: 14 }]}>
+          <View style={s.kucukResim}>
+            <Ikon ad="ay" boyut={30} renk={renk.soluk} />
+          </View>
+          <View style={{ flex: 1 }}>
+            <Y k={700} b={12} r={renk.soluk}>
+              Bugün
+            </Y>
+            <Y k={800} b={17} style={{ letterSpacing: -0.2 }}>
+              Dinlenme günü
+            </Y>
+            <Y k={500} b={13} r={renk.soluk}>
+              Hafif yürüyüş ya da nefes egzersizi iyi gelir
+            </Y>
+          </View>
+          <Pressable accessibilityLabel="Antrenman seç" onPress={() => router.navigate('/antrenman')} style={s.oynat}>
+            <Ikon ad="ileri" renk={renk.yazi} />
+          </Pressable>
+        </View>
+      )}
 
       {/* Alışkanlıklar */}
-      <Bolum ad="Alışkanlıklar" sayac={`${tamam}/${ALISKANLIKLAR.length}`} eylem="Ekle" />
+      <Bolum ad="Alışkanlıklar" sayac={`${tamam}/${g.aliskanliklar.length}`} eylem="Ekle" onEylem={() => router.push('/aliskanlik-ekle')} />
       <View style={s.izgara}>
-        {ALISKANLIKLAR.map((a) => {
+        {g.aliskanliklar.map((a) => {
           const on = !!gun.aliskanlik[a.id];
           return (
             <Pressable
@@ -137,7 +173,7 @@ export default function Bugun() {
                 {a.ad}
               </Y>
               <Y k={600} b={12} r={renk.soluk}>
-                {on ? 'Bugün tamam' : 'Dokun, tamamla'}
+                {g.seri(a.id) ? `${g.seri(a.id)} gün seri` : on ? 'Bugün tamam' : 'Dokun, tamamla'}
               </Y>
               <View style={s.noktalar}>
                 {son7(k).map((x) => {
@@ -151,19 +187,19 @@ export default function Bugun() {
       </View>
 
       {/* Güne başla */}
-      <GuneBasla />
+      {g.modulAcik('sabah') ? <GuneBasla /> : null}
 
       {/* Kayıtlar */}
       <Bolum ad="Kayıtlar" />
       <View style={s.liste}>
-        <Satir ikon="kalp" ad="Ruh hali" deger="Ekle" onPress={() => modul('ruh')} />
-        <Satir ikon="tarti" ad="Vücut" deger="Ekle" onPress={() => modul('vucut')} ust />
+        {g.modulAcik('ruh') ? <Satir ikon="kalp" ad="Ruh hali" deger="Ekle" onPress={() => modul('ruh')} /> : null}
+        {g.modulAcik('vucut') ? <Satir ikon="tarti" ad="Vücut" deger="Ekle" onPress={() => modul('vucut')} ust={g.modulAcik('ruh')} /> : null}
       </View>
 
       {/* Araçlar */}
       <Bolum ad="Araçlar" />
       <View style={s.araclar}>
-        {ARACLAR.map((a) => (
+        {ARACLAR.filter((a) => g.modulAcik(a.id)).map((a) => (
           <Pressable
             key={a.id}
             accessibilityRole="button"
@@ -305,8 +341,8 @@ const s = StyleSheet.create({
   satir2: { ...kart, flexDirection: 'row', alignItems: 'center', gap: 14, padding: 12, borderRadius: kose.kart },
   kucukResim: { width: 64, height: 64, borderRadius: 14, backgroundColor: renk.kart2, alignItems: 'center', justifyContent: 'center' },
   oynat: { width: 48, height: 48, borderRadius: 24, backgroundColor: renk.kart2, alignItems: 'center', justifyContent: 'center' },
-  izgara: { flexDirection: 'row', flexWrap: 'wrap', gap: 10 },
-  hab: { ...kart, width: '48.5%', flexGrow: 1, flexBasis: '45%', gap: 4, padding: 14, minHeight: 132, borderRadius: kose.kart },
+  izgara: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', rowGap: 10 },
+  hab: { ...kart, width: '48.5%', gap: 4, padding: 14, minHeight: 132, borderRadius: kose.kart },
   habOn: { backgroundColor: '#13241d', borderColor: '#1d5a43' },
   hico: { width: 40, height: 40, borderRadius: 14, backgroundColor: renk.kart2, alignItems: 'center', justifyContent: 'center', marginBottom: 6 },
   noktalar: { flexDirection: 'row', gap: 4, marginTop: 'auto', paddingTop: 8 },
